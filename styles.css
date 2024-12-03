@@ -1,1 +1,52 @@
 
+body {
+    margin: 0;
+    display: flex;
+    gap:90px;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #d6ccc2;
+    font-family: Arial, sans-serif;
+}
+
+.about {
+    align-self: flex-start;
+    padding-top: 80px;
+    justify-self: left;
+    max-width: 41vw;
+}
+ul{
+    font-size: larger;
+}
+
+
+
+.maze-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 50px);
+    grid-template-rows: repeat(10, 50px);
+    gap: 4px;
+    background: #8a817c;
+    padding: 6px;
+    border-radius: 10px;
+    
+}
+.cell {
+    background: #d5bdaf;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    border-radius: 1px ;
+}
+.cell.clicked {
+    background: #372b24;
+}
+.cell.start {
+    background: #ff5f5f;
+}
+.cell.end {
+    background: #92f690;
+}
+.cell.path {
+    background: #92f690;
+}
