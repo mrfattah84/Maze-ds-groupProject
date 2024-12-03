@@ -76,3 +76,38 @@ const res = Maze(
 );
 
 console.log(res);
+
+let state = 0;
+const promts = [
+  'Select the start point.',
+  'Select the end point.',
+  'Click the cells that you want to be obstacles.',
+  'now enter numbers inside cells to set their scores.',
+  'Enter the score that you want to achieve in the path.',
+];
+document.querySelector('.maze-grid').addEventListener('click', (e) => {
+  if (state === 0) {
+    e.target.classList.toggle('start');
+  } else if (state === 1) {
+    e.target.classList.toggle('end');
+  } else if (state === 2) {
+    e.target.classList.toggle('clicked');
+  }
+});
+
+const prompt = document.querySelector('.prompt');
+let num = 0;
+
+document.querySelector('.next').addEventListener('click', (e) => {
+  if (state === 4) {
+    num = document.querySelector('input').value;
+  }
+  state++;
+  prompt.textContent = promts[state];
+  if (state === 4) {
+    const input = document.createElement('input');
+    input.type = 'number';
+    input.value = num;
+    prompt.appendChild(input);
+  }
+});
