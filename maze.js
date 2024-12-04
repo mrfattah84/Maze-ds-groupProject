@@ -1,3 +1,10 @@
+//solver inputs
+let num = 0;
+let start = [0, 0];
+let end = [0, 0];
+let mazeMatrix = [];
+
+//solver
 function Maze(arr, num, start, end) {
   let path = [start];
   let res = [];
@@ -64,50 +71,90 @@ function Maze(arr, num, start, end) {
   return res;
 }
 
-const res = Maze(
-  [
-    [0, null, 0],
-    [0, 0, 0],
-    [0, 1, 0],
-  ],
-  1,
-  [0, 0],
-  [2, 2]
-);
+//UI
+let state = -1; // 0 for start, 1 for end, 2 for obstacles, 3 for cell scores, 4 for required score, 5 for solving
 
-console.log(res);
+const maze = document.querySelector('.maze-grid');
 
-let state = 0;
+for (let i = 0; i < 100; i++) {
+  const cell = document.createElement('div');
+  cell.classList.add('cell');
+  cell.contentEditable = 'false';
+  maze.appendChild(cell);
+}
 const promts = [
   'Select the start point.',
   'Select the end point.',
   'Click the cells that you want to be obstacles.',
   'now enter numbers inside cells to set their scores.',
   'Enter the score that you want to achieve in the path.',
+  'Here is your path being made.',
 ];
-document.querySelector('.maze-grid').addEventListener('click', (e) => {
+
+maze.addEventListener('click', (e) => {
   if (state === 0) {
     e.target.classList.toggle('start');
+    state++;
+    prompt.textContent = promts[state];
   } else if (state === 1) {
     e.target.classList.toggle('end');
+    state++;
+    prompt.textContent = promts[state];
   } else if (state === 2) {
     e.target.classList.toggle('clicked');
+  } else if (state === 3) {
+    document.querySelectorAll('.cell').forEach((cell) => {
+      if (cell.classList.length === 1) {
+        cell.contentEditable = 'true';
+      }
+    });
   }
 });
 
 const prompt = document.querySelector('.prompt');
-let num = 0;
 
 document.querySelector('.next').addEventListener('click', (e) => {
   if (state === 4) {
-    num = document.querySelector('input').value;
+    //saving user required score
+    num = parseInt(document.querySelector('input').value) || 0;
   }
   state++;
   prompt.textContent = promts[state];
   if (state === 4) {
+    //disabeling user score input
+    document.querySelectorAll('.cell').forEach((cell) => {
+      cell.contentEditable = 'false';
+    });
+    // enabling user to input required score
     const input = document.createElement('input');
     input.type = 'number';
-    input.value = num;
     prompt.appendChild(input);
+  }
+  if (state === 5) {
+    //making the maze matrix out of ui elements for the solver
+    const cells = document.querySelectorAll('.cell');
+    for (let i = 0; i < 10; i++) {
+      row = [];
+      for (let j = 0; j < 10; j++) {
+        cell = cells[i * 10 + j];
+        if (cell.classList.contains('start')) {
+          start = [i, j];
+          row.push(0);
+        } else if (cell.classList.contains('end')) {
+          end = [i, j];
+          row.push(0);
+        } else if (cell.classList.contains('clicked')) {
+          row.push(null);
+        } else {
+          row.push(parseInt(cell.textContent) || 0);
+        }
+      }
+      mazeMatrix.push(row);
+    }
+    console.log(mazeMatrix, num, start, end);
+    console.log(Maze(mazeMatrix, num, start, end));
+  }
+  if (state >= 6) {
+    location.reload();
   }
 });
