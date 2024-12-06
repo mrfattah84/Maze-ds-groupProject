@@ -26,6 +26,7 @@ function Maze(arr, num, start, end) {
   };
 
   function solveMaze(row, col, path) {
+    console.log(row, col);
     if (row === end[0] && col === end[1] && pathSum(path) === num) {
       res.push(path);
       return true;
@@ -152,7 +153,22 @@ document.querySelector('.next').addEventListener('click', (e) => {
       mazeMatrix.push(row);
     }
     console.log(mazeMatrix, num, start, end);
-    console.log(Maze(mazeMatrix, num, start, end));
+    const paths = Maze(mazeMatrix, num, start, end);
+    let min = 0;
+    for (let i = 0; i < paths.length; i++) {
+      const path = paths[i];
+      if (path.length < paths[min].length) {
+        min = i;
+      }
+    }
+    const path = paths[min];
+    for (let i = 0; i < path.length; i++) {
+      const item = path[i];
+      cells[item[0] * 10 + item[1]].classList.add('path');
+      cells[item[0] * 10 + item[1]].style.opacity = `${(i + 1) / path.length}`;
+    }
+
+    console.log(paths);
   }
   if (state >= 6) {
     location.reload();
