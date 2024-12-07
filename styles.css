@@ -19,10 +19,27 @@ ul {
   font-size: larger;
 }
 
+h2{
+  display: block;
+  font-size: 1.5em;
+  padding-left: 3dvw; 
+}
+.next {
+  padding: 10px 20px; 
+  font-size: 1.7em; 
+  background-color: #9d2e78; 
+  color: white; 
+  border: 1px solid #6d2050; 
+  border-radius: 8px; 
+  cursor: pointer;  
+  margin-left: 15%; 
+  box-shadow: #4d133a 1px 1px 15px 5px; 
+  display: inline-block;}
+
 .maze-grid {
   display: grid;
-  grid-template-columns: repeat(10, 50px);
-  grid-template-rows: repeat(10, 50px);
+  grid-template-columns: repeat(7, 50px);
+  grid-template-rows: repeat(7, 50px);
   gap: 4px;
   background: #8a817c;
   padding: 6px;

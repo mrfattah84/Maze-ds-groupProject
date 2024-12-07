@@ -77,7 +77,7 @@ let state = -1; // 0 for start, 1 for end, 2 for obstacles, 3 for cell scores, 4
 
 const maze = document.querySelector('.maze-grid');
 
-for (let i = 0; i < 100; i++) {
+for (let i = 0; i < 49; i++) {
   const cell = document.createElement('div');
   cell.classList.add('cell');
   cell.contentEditable = 'false';
@@ -134,10 +134,10 @@ document.querySelector('.next').addEventListener('click', (e) => {
   if (state === 5) {
     //making the maze matrix out of ui elements for the solver
     const cells = document.querySelectorAll('.cell');
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 7; i++) {
       row = [];
-      for (let j = 0; j < 10; j++) {
-        cell = cells[i * 10 + j];
+      for (let j = 0; j < 7; j++) {
+        cell = cells[i * 7 + j];
         if (cell.classList.contains('start')) {
           start = [i, j];
           row.push(0);
@@ -164,8 +164,8 @@ document.querySelector('.next').addEventListener('click', (e) => {
     const path = paths[min];
     for (let i = 0; i < path.length; i++) {
       const item = path[i];
-      cells[item[0] * 10 + item[1]].classList.add('path');
-      cells[item[0] * 10 + item[1]].style.opacity = `${(i + 1) / path.length}`;
+      cells[item[0] * 7 + item[1]].classList.add('path');
+      cells[item[0] * 7 + item[1]].style.opacity = `${(i + 1) / path.length}`;
     }
 
     console.log(paths);
